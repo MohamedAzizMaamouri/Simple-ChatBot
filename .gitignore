@@ -1,0 +1,143 @@
+# =========================
+
+# Python
+
+# =========================
+
+**pycache**/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# =========================
+
+# Virtual Environments
+
+# =========================
+
+venv/
+.env/
+env/
+ENV/
+.venv/
+
+# =========================
+
+# Environment Variables
+
+# =========================
+
+.env
+.env.*
+*.env
+
+# =========================
+
+# Logs & Runtime
+
+# =========================
+
+*.log
+*.out
+*.err
+*.pid
+
+# =========================
+
+# Database
+
+# =========================
+
+*.sqlite3
+*.db
+
+# =========================
+
+# FastAPI / Uvicorn
+
+# =========================
+
+uvicorn.log
+
+# =========================
+
+# IDEs / Editors
+
+# =========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+
+# OS Files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# Testing
+
+# =========================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+
+# Migrations (optional)
+
+# =========================
+
+# If you use Alembic, DO NOT ignore migrations unless intentional
+
+# migrations/
+
+# =========================
+
+# Node (if frontend in same repo)
+
+# =========================
+
+node_modules/
+
+
+# =========================
+
+# Docker
+
+# =========================
+
+docker-compose.override.yml
+
+# =========================
+
+# Misc
+
+# =========================
+
+*.bak
+*.tmp
