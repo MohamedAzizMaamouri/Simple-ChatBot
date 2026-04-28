@@ -107,6 +107,14 @@ async def send_message(
     # Save user message
     service.add_user_message(conversation_id, current_user.id, chat_request.message)
 
+    # If this is the first message, generate a title for the conversation
+    if service.is_first_message(conversation_id):
+        try:
+            service.update_title_from_first_message(conversation_id, current_user.id, llm_service)
+        except Exception as e:
+            # If title generation fails, continue anyway (don't break the chat)
+            print(f"Failed to generate conversation title: {e}")
+
     # Get conversation history
     messages = service.get_conversation_messages(conversation_id, current_user.id)
 

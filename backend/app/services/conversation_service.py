@@ -85,3 +85,34 @@ class ConversationService:
     def add_assistant_message(self, conversation_id: int, content: str) -> Message:
         """Add an assistant message to a conversation."""
         return self.message_repo.create(conversation_id, MessageRole.ASSISTANT, content)
+
+    def is_first_message(self, conversation_id: int) -> bool:
+        """Check if a conversation has only one message (the first user message)."""
+        messages = self.message_repo.get_conversation_messages(conversation_id)
+        return len(messages) == 1
+
+    def update_title_from_first_message(self, conversation_id: int, user_id: int, llm_service) -> str:
+        """
+        Generate and update conversation title based on the first message.
+        Returns the generated title.
+        """
+        # Get the conversation
+        conversation = self.get_conversation(conversation_id, user_id)
+        
+        # Get the first user message
+        messages = self.message_repo.get_conversation_messages(conversation_id)
+        first_message = next((msg for msg in messages if msg.role == MessageRole.USER), None)
+        
+        if not first_message:
+            return conversation.title
+        
+        # Generate title using LLM
+        generated_title = llm_service.generate_conversation_title(first_message.content)
+        
+        # Update the conversation with the generated title
+        update_data = ConversationUpdate(title=generated_title)
+        self.update_conversation(conversation_id, user_id, update_data)
+        
+        return generated_title
+
+

@@ -55,3 +55,26 @@ class LLMService:
         for chunk in response:
             if chunk.text:
                 yield chunk.text
+
+    def generate_conversation_title(self, user_message: str) -> str:
+        """
+        Generate a concise conversation title from the user's first message.
+        Returns a 5-10 word summary that describes the conversation topic.
+        """
+        prompt = f"""You are a conversation title generator. 
+Given a user's message, generate a short, concise title (5-10 words maximum) that summarizes the topic they want to discuss.
+The title should be descriptive and specific to what the user is asking about.
+Return ONLY the title text, nothing else.
+
+User message: "{user_message}"
+
+Title:"""
+        
+        response = self.model.generate_content(prompt)
+        title = response.text.strip()
+        
+        # Ensure title is not too long, fallback if needed
+        if len(title) > 100:
+            title = title[:97] + "..."
+        
+        return title

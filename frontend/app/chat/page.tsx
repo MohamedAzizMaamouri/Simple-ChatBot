@@ -45,12 +45,6 @@ export default function ChatPage() {
     };
 
     const handleSendMessage = async (content: string) => {
-        // If this is the first message, update conversation title
-        if (messages.length === 0 && activeConversationId) {
-            const title = content.slice(0, 50) + (content.length > 50 ? '...' : '');
-            await apiClient.updateConversation(activeConversationId, {title: title});
-        }
-
         await sendMessage(content);
     };
 
