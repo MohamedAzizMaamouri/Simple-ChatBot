@@ -70,6 +70,10 @@ class APIClient {
     const response = await this.client.post<Conversation>('/chat/conversations', data);
     return response.data;
   }
+  async updateConversation(id: number, data: Partial<ConversationCreate>): Promise<Conversation> {
+    const response = await this.client.patch<Conversation>(`/chat/conversations/${id}`, data);
+    return response.data;
+  }
 
   async getConversation(id: number): Promise<Conversation> {
     const response = await this.client.get<Conversation>(`/chat/conversations/${id}`);
