@@ -31,6 +31,19 @@ class ConversationRepository:
             Conversation.user_id == user_id
         ).order_by(Conversation.created_at.desc()).all()
 
+    def get_empty_conversation(self, user_id: int) -> Optional[Conversation]:
+        """Get the most recent empty conversation for a user (one with no messages)."""
+        from app.models.message import Message
+        
+        # Query conversations that have no messages
+        empty_conversations = self.db.query(Conversation).filter(
+            Conversation.user_id == user_id
+        ).outerjoin(Message).filter(
+            Message.id.is_(None)
+        ).order_by(Conversation.created_at.desc()).first()
+        
+        return empty_conversations
+
     def update(self, conversation_id: int, update_data: ConversationUpdate) -> Optional[Conversation]:
         """Update conversation."""
         conversation = self.get_by_id(conversation_id)

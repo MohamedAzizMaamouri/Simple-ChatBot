@@ -17,7 +17,18 @@ class ConversationService:
         self.message_repo = MessageRepository(db)
 
     def create_conversation(self, user_id: int, conversation_data: ConversationCreate) -> Conversation:
-        """Create a new conversation."""
+        """
+        Create a new conversation.
+        If user already has an empty conversation (no messages), reuse that instead.
+        """
+        # Check if user already has an empty conversation
+        empty_conversation = self.conversation_repo.get_empty_conversation(user_id)
+        
+        if empty_conversation:
+            # Reuse the existing empty conversation
+            return empty_conversation
+        
+        # No empty conversation exists, create a new one
         return self.conversation_repo.create(user_id, conversation_data)
 
     def get_user_conversations(self, user_id: int) -> List[Conversation]:
